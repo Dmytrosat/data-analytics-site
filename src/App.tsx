@@ -6,6 +6,13 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import Index from "./pages/Index.tsx";
 import Records from "./pages/Records.tsx";
+import {
+  SourcesPage, VisualizationPage, LogsPage,
+  AnalyticsPage, ReportsPage, IntegrationsPage,
+  UsersPage, TeamsPage, BillingPage,
+  ApiKeysPage, WebhooksPage, NotificationsPage,
+  SettingsPage,
+} from "./pages/Placeholders.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -20,6 +27,19 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/records" element={<Records />} />
+            <Route path="/sources" element={<SourcesPage />} />
+            <Route path="/visualization" element={<VisualizationPage />} />
+            <Route path="/logs" element={<LogsPage />} />
+            <Route path="/analytics" element={<AnalyticsPage />} />
+            <Route path="/reports" element={<ReportsPage />} />
+            <Route path="/integrations" element={<IntegrationsPage />} />
+            <Route path="/users" element={<UsersPage />} />
+            <Route path="/teams" element={<TeamsPage />} />
+            <Route path="/billing" element={<BillingPage />} />
+            <Route path="/api-keys" element={<ApiKeysPage />} />
+            <Route path="/webhooks" element={<WebhooksPage />} />
+            <Route path="/notifications" element={<NotificationsPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
