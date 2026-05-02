@@ -4,15 +4,10 @@ import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
-import { SidebarNav, type NavId } from "./Sidebar";
+import { SidebarNav } from "./Sidebar";
 import { Badge } from "@/components/ui/badge";
 
-interface Props {
-  active: NavId;
-  onSelect: (id: NavId) => void;
-}
-
-export function Header({ active, onSelect }: Props) {
+export function Header() {
   return (
     <header className="fixed inset-x-0 top-0 z-40 flex h-16 items-center gap-3 border-b border-border bg-card/80 px-4 backdrop-blur supports-[backdrop-filter]:bg-card/60 md:px-6">
       {/* Mobile hamburger */}
@@ -24,7 +19,7 @@ export function Header({ active, onSelect }: Props) {
         </SheetTrigger>
         <SheetContent side="left" className="w-64 p-0">
           <SheetTitle className="px-6 pt-6 text-lg font-bold">Data</SheetTitle>
-          <SidebarNav active={active} onSelect={onSelect} />
+          <SidebarNav />
         </SheetContent>
       </Sheet>
 

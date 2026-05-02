@@ -97,3 +97,41 @@ export const activity: ActivityItem[] = [
   { id: "a7", title: "Помилка валідації", description: "CSV upload — 14 рядків з некоректним email", status: "warning", timestamp: new Date(Date.now() - 1000 * 60 * 60 * 26).toISOString() },
   { id: "a8", title: "Користувач увійшов", description: "admin@data.app з IP 192.168.1.42", status: "info", timestamp: new Date(Date.now() - 1000 * 60 * 60 * 48).toISOString() },
 ];
+
+// ─────────── Records (окремі події/рядки даних) ───────────
+export type RecordStatus = "success" | "pending" | "failed" | "warning";
+
+export interface RecordItem {
+  id: string;
+  sourceId: string;
+  sourceName: string;
+  type: SourceType;
+  payload: string;
+  status: RecordStatus;
+  createdAt: string; // ISO
+}
+
+const recordStatuses: RecordStatus[] = ["success", "pending", "failed", "warning"];
+const payloadSamples = [
+  "Order #%n imported", "User signup event", "Webhook delivered", "Row inserted",
+  "Schema validated", "Rate limit hit", "Auth token refreshed", "Batch processed",
+  "File parsed (%n rows)", "Record updated", "Duplicate skipped", "Field mapped",
+];
+
+// Деterministic generator (without seed lib): based on index — стабільний між рендерами.
+export const records: RecordItem[] = Array.from({ length: 120 }).map((_, i) => {
+  const src = sources[i % sources.length];
+  // Розподіляємо на 30 днів назад
+  const minutesBack = (i * 173) % (60 * 24 * 30);
+  const createdAt = new Date(Date.now() - minutesBack * 60 * 1000).toISOString();
+  const tpl = payloadSamples[i % payloadSamples.length];
+  return {
+    id: `rec_${(i + 1).toString().padStart(4, "0")}`,
+    sourceId: src.id,
+    sourceName: src.source,
+    type: src.type,
+    payload: tpl.replace("%n", String(((i * 37) % 9000) + 1)),
+    status: recordStatuses[(i * 3) % recordStatuses.length],
+    createdAt,
+  };
+});
