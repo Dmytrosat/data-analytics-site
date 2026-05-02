@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Header } from "@/components/dashboard/Header";
-import { DesktopSidebar, type NavId } from "@/components/dashboard/Sidebar";
+import { DesktopSidebar } from "@/components/dashboard/Sidebar";
 import { KPICards } from "@/components/dashboard/KPICards";
 import { DataTable } from "@/components/dashboard/DataTable";
 import { ChartsSection } from "@/components/dashboard/ChartsSection";
@@ -20,7 +20,6 @@ import { kpis, sources } from "@/data/mockData";
  *    на router-структуру замініть `active` на `useLocation().pathname`.
  */
 const Index = () => {
-  const [active, setActive] = useState<NavId>("dashboard");
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -32,8 +31,8 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Header active={active} onSelect={setActive} />
-      <DesktopSidebar active={active} onSelect={setActive} />
+      <Header />
+      <DesktopSidebar />
 
       <main className="pt-16 md:pl-60">
         <div className="mx-auto max-w-[1600px] space-y-6 p-4 md:p-6">

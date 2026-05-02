@@ -1,23 +1,25 @@
 import { LayoutDashboard, Database, Table2, BarChart3, ScrollText, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const navItems = [
-  { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { id: "sources", label: "Sources", icon: Database },
-  { id: "records", label: "Records", icon: Table2 },
-  { id: "visualization", label: "Visualization", icon: BarChart3 },
-  { id: "logs", label: "Logs", icon: ScrollText },
-  { id: "settings", label: "Settings", icon: Settings },
+  { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, path: "/" },
+  { id: "sources", label: "Sources", icon: Database, path: "/" },
+  { id: "records", label: "Records", icon: Table2, path: "/records" },
+  { id: "visualization", label: "Visualization", icon: BarChart3, path: "/" },
+  { id: "logs", label: "Logs", icon: ScrollText, path: "/" },
+  { id: "settings", label: "Settings", icon: Settings, path: "/" },
 ] as const;
 
 export type NavId = (typeof navItems)[number]["id"];
 
 interface Props {
-  active: NavId;
-  onSelect: (id: NavId) => void;
+  onNavigate?: () => void;
 }
 
-export function SidebarNav({ active, onSelect }: Props) {
+export function SidebarNav({ onNavigate }: Props = {}) {
+  const location = useLocation();
+  const navigate = useNavigate();
   return (
     <nav className="flex flex-col gap-1 p-3" aria-label="Головна навігація">
       <div className="px-3 py-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">
@@ -25,11 +27,16 @@ export function SidebarNav({ active, onSelect }: Props) {
       </div>
       {navItems.map((item) => {
         const Icon = item.icon;
-        const isActive = active === item.id;
+        const isActive =
+          (item.path === "/records" && location.pathname === "/records") ||
+          (item.path === "/" && location.pathname === "/" && item.id === "dashboard");
         return (
           <button
             key={item.id}
-            onClick={() => onSelect(item.id)}
+            onClick={() => {
+              navigate(item.path);
+              onNavigate?.();
+            }}
             aria-current={isActive ? "page" : undefined}
             className={cn(
               "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
@@ -48,10 +55,10 @@ export function SidebarNav({ active, onSelect }: Props) {
   );
 }
 
-export function DesktopSidebar(props: Props) {
+export function DesktopSidebar() {
   return (
     <aside className="fixed left-0 top-16 hidden h-[calc(100vh-4rem)] w-60 border-r border-border bg-sidebar md:block">
-      <SidebarNav {...props} />
+      <SidebarNav />
     </aside>
   );
 }
