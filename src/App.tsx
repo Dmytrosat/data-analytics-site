@@ -6,9 +6,10 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import Index from "./pages/Index.tsx";
 import Records from "./pages/Records.tsx";
+import Integrations from "./pages/Integrations.tsx";
 import {
   SourcesPage, VisualizationPage, LogsPage,
-  AnalyticsPage, ReportsPage, IntegrationsPage,
+  AnalyticsPage, ReportsPage,
   UsersPage, TeamsPage, BillingPage,
   ApiKeysPage, WebhooksPage, NotificationsPage,
   SettingsPage,
@@ -32,7 +33,7 @@ const App = () => (
             <Route path="/logs" element={<LogsPage />} />
             <Route path="/analytics" element={<AnalyticsPage />} />
             <Route path="/reports" element={<ReportsPage />} />
-            <Route path="/integrations" element={<IntegrationsPage />} />
+            <Route path="/integrations" element={<Integrations />} />
             <Route path="/users" element={<UsersPage />} />
             <Route path="/teams" element={<TeamsPage />} />
             <Route path="/billing" element={<BillingPage />} />
