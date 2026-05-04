@@ -135,3 +135,53 @@ export const records: RecordItem[] = Array.from({ length: 120 }).map((_, i) => {
     createdAt,
   };
 });
+
+// ─────────── Integrations ───────────
+export type IntegrationCategory =
+  | "Communication"
+  | "Analytics"
+  | "Storage"
+  | "Payments"
+  | "DevOps"
+  | "CRM";
+
+export type IntegrationStatus = "connected" | "disconnected" | "error";
+
+export interface Integration {
+  id: string;
+  name: string;
+  description: string;
+  category: IntegrationCategory;
+  iconKey:
+    | "slack"
+    | "github"
+    | "stripe"
+    | "google"
+    | "notion"
+    | "zapier"
+    | "dropbox"
+    | "mailchimp"
+    | "hubspot"
+    | "jira"
+    | "figma"
+    | "sentry";
+  enabled: boolean;
+  status: IntegrationStatus;
+  lastSync: string; // ISO
+  eventsToday: number;
+}
+
+export const integrations: Integration[] = [
+  { id: "int_01", name: "Slack", description: "Сповіщення про події та помилки в каналах команди.", category: "Communication", iconKey: "slack", enabled: true, status: "connected", lastSync: new Date(Date.now() - 1000 * 60 * 8).toISOString(), eventsToday: 1284 },
+  { id: "int_02", name: "GitHub", description: "Синхронізація issues, pull requests та deployments.", category: "DevOps", iconKey: "github", enabled: true, status: "connected", lastSync: new Date(Date.now() - 1000 * 60 * 17).toISOString(), eventsToday: 642 },
+  { id: "int_03", name: "Stripe", description: "Платежі, підписки та події біллінгу в реальному часі.", category: "Payments", iconKey: "stripe", enabled: true, status: "connected", lastSync: new Date(Date.now() - 1000 * 60 * 3).toISOString(), eventsToday: 318 },
+  { id: "int_04", name: "Google Analytics", description: "Імпорт метрик трафіку та воронок конверсії.", category: "Analytics", iconKey: "google", enabled: false, status: "disconnected", lastSync: new Date(Date.now() - 1000 * 60 * 60 * 26).toISOString(), eventsToday: 0 },
+  { id: "int_05", name: "Notion", description: "Двостороння синхронізація сторінок і баз даних.", category: "Storage", iconKey: "notion", enabled: true, status: "error", lastSync: new Date(Date.now() - 1000 * 60 * 90).toISOString(), eventsToday: 12 },
+  { id: "int_06", name: "Zapier", description: "Автоматизація через 6000+ сторонніх сервісів.", category: "DevOps", iconKey: "zapier", enabled: true, status: "connected", lastSync: new Date(Date.now() - 1000 * 60 * 12).toISOString(), eventsToday: 894 },
+  { id: "int_07", name: "Dropbox", description: "Синхронізація файлів та резервних копій.", category: "Storage", iconKey: "dropbox", enabled: false, status: "disconnected", lastSync: new Date(Date.now() - 1000 * 60 * 60 * 72).toISOString(), eventsToday: 0 },
+  { id: "int_08", name: "Mailchimp", description: "Email-кампанії, підписники та аналітика розсилок.", category: "Communication", iconKey: "mailchimp", enabled: true, status: "connected", lastSync: new Date(Date.now() - 1000 * 60 * 45).toISOString(), eventsToday: 156 },
+  { id: "int_09", name: "HubSpot", description: "CRM, контакти, угоди та маркетинг-автоматизація.", category: "CRM", iconKey: "hubspot", enabled: true, status: "connected", lastSync: new Date(Date.now() - 1000 * 60 * 22).toISOString(), eventsToday: 478 },
+  { id: "int_10", name: "Jira", description: "Задачі, спринти та прогрес команди розробки.", category: "DevOps", iconKey: "jira", enabled: false, status: "disconnected", lastSync: new Date(Date.now() - 1000 * 60 * 60 * 14).toISOString(), eventsToday: 0 },
+  { id: "int_11", name: "Figma", description: "Сповіщення про коментарі, зміни в макетах і прототипи.", category: "Communication", iconKey: "figma", enabled: true, status: "connected", lastSync: new Date(Date.now() - 1000 * 60 * 31).toISOString(), eventsToday: 87 },
+  { id: "int_12", name: "Sentry", description: "Моніторинг помилок та продуктивності застосунків.", category: "Analytics", iconKey: "sentry", enabled: true, status: "error", lastSync: new Date(Date.now() - 1000 * 60 * 4).toISOString(), eventsToday: 53 },
+];

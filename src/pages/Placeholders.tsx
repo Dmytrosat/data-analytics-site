@@ -1,5 +1,5 @@
 import {
-  Database, BarChart3, ScrollText, LineChart, FileText, Plug,
+  Database, BarChart3, ScrollText, LineChart, FileText,
   Users, UsersRound, CreditCard, KeyRound, Webhook, Bell, Settings,
 } from "lucide-react";
 import { PagePlaceholder } from "@/components/dashboard/PagePlaceholder";
@@ -51,15 +51,6 @@ export const ReportsPage = () => (
     description="Генерація та розсилка звітів"
     icon={FileText}
     bullets={["Шаблони звітів", "Розклад e-mail", "PDF/Excel експорт"]}
-  />
-);
-
-export const IntegrationsPage = () => (
-  <PagePlaceholder
-    title="Інтеграції"
-    description="Сторонні сервіси та маркетплейс"
-    icon={Plug}
-    bullets={["Slack, Teams, Discord", "Zapier & Make", "OAuth-провайдери"]}
   />
 );
 
