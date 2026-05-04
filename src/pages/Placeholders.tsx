@@ -1,5 +1,5 @@
 import {
-  Database, BarChart3, ScrollText, LineChart, FileText,
+  Database, ScrollText, LineChart, FileText,
   Users, UsersRound, CreditCard, KeyRound, Webhook, Bell, Settings,
 } from "lucide-react";
 import { PagePlaceholder } from "@/components/dashboard/PagePlaceholder";
@@ -15,15 +15,6 @@ export const SourcesPage = () => (
     description="Керування підключеними джерелами даних"
     icon={Database}
     bullets={["Каталог конекторів", "Налаштування авторизації", "Розклад синхронізації"]}
-  />
-);
-
-export const VisualizationPage = () => (
-  <PagePlaceholder
-    title="Візуалізація"
-    description="Конструктор діаграм та дашбордів"
-    icon={BarChart3}
-    bullets={["Drag & drop редактор", "10+ типів графіків", "Збережені перегляди"]}
   />
 );
 

@@ -7,8 +7,9 @@ import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import Index from "./pages/Index.tsx";
 import Records from "./pages/Records.tsx";
 import Integrations from "./pages/Integrations.tsx";
+import Visualization from "./pages/Visualization.tsx";
 import {
-  SourcesPage, VisualizationPage, LogsPage,
+  SourcesPage, LogsPage,
   AnalyticsPage, ReportsPage,
   UsersPage, TeamsPage, BillingPage,
   ApiKeysPage, WebhooksPage, NotificationsPage,
@@ -29,7 +30,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/records" element={<Records />} />
             <Route path="/sources" element={<SourcesPage />} />
-            <Route path="/visualization" element={<VisualizationPage />} />
+            <Route path="/visualization" element={<Visualization />} />
             <Route path="/logs" element={<LogsPage />} />
             <Route path="/analytics" element={<AnalyticsPage />} />
             <Route path="/reports" element={<ReportsPage />} />
