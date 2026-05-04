@@ -185,3 +185,87 @@ export const integrations: Integration[] = [
   { id: "int_11", name: "Figma", description: "Сповіщення про коментарі, зміни в макетах і прототипи.", category: "Communication", iconKey: "figma", enabled: true, status: "connected", lastSync: new Date(Date.now() - 1000 * 60 * 31).toISOString(), eventsToday: 87 },
   { id: "int_12", name: "Sentry", description: "Моніторинг помилок та продуктивності застосунків.", category: "Analytics", iconKey: "sentry", enabled: true, status: "error", lastSync: new Date(Date.now() - 1000 * 60 * 4).toISOString(), eventsToday: 53 },
 ];
+
+// ─────────── Visualization ───────────
+export type ChartKind = "line" | "area" | "bar" | "pie" | "radar" | "kpi";
+
+export interface DashboardWidget {
+  id: string;
+  title: string;
+  kind: ChartKind;
+  description?: string;
+  /** Дані для графіка */
+  data?: Array<Record<string, number | string>>;
+  /** Для KPI */
+  value?: string;
+  delta?: number;
+}
+
+export interface SavedDashboard {
+  id: string;
+  name: string;
+  description: string;
+  updatedAt: string;
+  widgets: number;
+  owner: string;
+}
+
+const months = ["Січ", "Лют", "Бер", "Кві", "Тра", "Чер", "Лип", "Сер", "Вер", "Жов", "Лис", "Гру"];
+
+export const revenueTimeline = months.map((m, i) => ({
+  name: m,
+  revenue: 12000 + Math.round(Math.sin(i / 1.7) * 4000 + i * 900 + Math.random() * 1500),
+  cost: 6000 + Math.round(Math.cos(i / 2) * 2000 + i * 380 + Math.random() * 800),
+}));
+
+export const trafficByChannel = [
+  { name: "Organic", value: 4280 },
+  { name: "Paid", value: 2390 },
+  { name: "Referral", value: 1420 },
+  { name: "Direct", value: 980 },
+  { name: "Social", value: 1640 },
+];
+
+export const conversionFunnel = [
+  { name: "Visit", value: 12480 },
+  { name: "Sign up", value: 4820 },
+  { name: "Trial", value: 2140 },
+  { name: "Paid", value: 612 },
+];
+
+export const performanceRadar = [
+  { metric: "Speed", A: 86, B: 72 },
+  { metric: "Reliability", A: 92, B: 80 },
+  { metric: "Latency", A: 74, B: 65 },
+  { metric: "Coverage", A: 88, B: 78 },
+  { metric: "Quality", A: 81, B: 70 },
+  { metric: "UX", A: 90, B: 75 },
+];
+
+export const defaultWidgets: DashboardWidget[] = [
+  { id: "w1", kind: "kpi", title: "MRR", value: "$148.2k", delta: 9.4 },
+  { id: "w2", kind: "kpi", title: "Активні користувачі", value: "12 480", delta: 4.2 },
+  { id: "w3", kind: "kpi", title: "Конверсія", value: "4.9%", delta: -1.2 },
+  { id: "w4", kind: "kpi", title: "Avg session", value: "5m 12s", delta: 2.8 },
+  { id: "w5", kind: "area", title: "Виручка vs витрати", description: "12 місяців", data: revenueTimeline },
+  { id: "w6", kind: "pie", title: "Трафік за каналами", description: "Останні 30 днів", data: trafficByChannel },
+  { id: "w7", kind: "bar", title: "Воронка конверсії", description: "Етапи користувача", data: conversionFunnel },
+  { id: "w8", kind: "radar", title: "Performance score", description: "Поточний vs попередній квартал", data: performanceRadar },
+  { id: "w9", kind: "line", title: "Завантаження записів", description: "14 днів", data: ingestionTimeline },
+];
+
+export const widgetLibrary: Array<{ kind: ChartKind; title: string; description: string }> = [
+  { kind: "kpi", title: "KPI карта", description: "Велике число + дельта" },
+  { kind: "line", title: "Лінійний графік", description: "Тренди в часі" },
+  { kind: "area", title: "Area chart", description: "Накопичувальна динаміка" },
+  { kind: "bar", title: "Стовпчики", description: "Порівняння категорій" },
+  { kind: "pie", title: "Кругова", description: "Розподіл частин" },
+  { kind: "radar", title: "Radar", description: "Багатовимірне порівняння" },
+];
+
+export const savedDashboards: SavedDashboard[] = [
+  { id: "d1", name: "Revenue overview", description: "Виручка, MRR, церн", updatedAt: new Date(Date.now() - 1000 * 60 * 32).toISOString(), widgets: 8, owner: "admin@data.app" },
+  { id: "d2", name: "Product analytics", description: "Активність користувачів та фічі", updatedAt: new Date(Date.now() - 1000 * 60 * 60 * 5).toISOString(), widgets: 12, owner: "pm@data.app" },
+  { id: "d3", name: "Ops health", description: "SLA, помилки, latency", updatedAt: new Date(Date.now() - 1000 * 60 * 60 * 26).toISOString(), widgets: 6, owner: "ops@data.app" },
+  { id: "d4", name: "Marketing funnel", description: "Канали, CPA, конверсія", updatedAt: new Date(Date.now() - 1000 * 60 * 60 * 72).toISOString(), widgets: 9, owner: "growth@data.app" },
+];
