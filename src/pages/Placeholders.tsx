@@ -1,5 +1,5 @@
 import {
-  Database, ScrollText, FileText,
+  Database, ScrollText,
   Users, UsersRound, CreditCard, KeyRound, Webhook, Bell, Settings,
 } from "lucide-react";
 import { PagePlaceholder } from "@/components/dashboard/PagePlaceholder";
@@ -24,15 +24,6 @@ export const LogsPage = () => (
     description="Системні події та аудит"
     icon={ScrollText}
     bullets={["Фільтр за рівнем", "Повнотекстовий пошук", "Експорт у JSON/CSV"]}
-  />
-);
-
-export const ReportsPage = () => (
-  <PagePlaceholder
-    title="Звіти"
-    description="Генерація та розсилка звітів"
-    icon={FileText}
-    bullets={["Шаблони звітів", "Розклад e-mail", "PDF/Excel експорт"]}
   />
 );
 
