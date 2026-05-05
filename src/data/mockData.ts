@@ -269,3 +269,127 @@ export const savedDashboards: SavedDashboard[] = [
   { id: "d3", name: "Ops health", description: "SLA, помилки, latency", updatedAt: new Date(Date.now() - 1000 * 60 * 60 * 26).toISOString(), widgets: 6, owner: "ops@data.app" },
   { id: "d4", name: "Marketing funnel", description: "Канали, CPA, конверсія", updatedAt: new Date(Date.now() - 1000 * 60 * 60 * 72).toISOString(), widgets: 9, owner: "growth@data.app" },
 ];
+
+// ─────────── Analytics ───────────
+export interface AnalyticsKpi {
+  id: string;
+  title: string;
+  value: string;
+  delta: number;
+  trend: number[]; // sparkline values
+  iconKey: "users" | "session" | "bounce" | "duration" | "revenue" | "conversion";
+}
+
+export const analyticsKpis: AnalyticsKpi[] = [
+  { id: "ak1", title: "Активні користувачі", value: "48 921", delta: 12.4, iconKey: "users",
+    trend: [22, 28, 24, 31, 35, 33, 41, 38, 44, 47, 45, 52] },
+  { id: "ak2", title: "Сесії", value: "184 320", delta: 8.7, iconKey: "session",
+    trend: [120, 125, 132, 128, 140, 152, 148, 160, 158, 170, 178, 184] },
+  { id: "ak3", title: "Bounce rate", value: "32.4%", delta: -3.2, iconKey: "bounce",
+    trend: [40, 39, 38, 37, 38, 36, 35, 34, 35, 33, 33, 32] },
+  { id: "ak4", title: "Avg. session", value: "4m 28s", delta: 5.6, iconKey: "duration",
+    trend: [3, 3.2, 3.4, 3.3, 3.6, 3.8, 3.9, 4.0, 4.1, 4.2, 4.3, 4.5] },
+  { id: "ak5", title: "Конверсія", value: "4.92%", delta: 2.1, iconKey: "conversion",
+    trend: [3.8, 4.0, 3.9, 4.1, 4.3, 4.2, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9] },
+  { id: "ak6", title: "Виручка", value: "$148.2k", delta: 9.4, iconKey: "revenue",
+    trend: [80, 88, 92, 95, 102, 110, 118, 122, 130, 134, 142, 148] },
+];
+
+// 30-day timeline with current vs previous period
+export const analyticsTimeline = Array.from({ length: 30 }).map((_, i) => {
+  const d = new Date();
+  d.setDate(d.getDate() - (29 - i));
+  return {
+    date: d.toLocaleDateString("uk-UA", { day: "2-digit", month: "2-digit" }),
+    current: 3200 + Math.round(Math.sin(i / 3) * 800 + i * 90 + Math.random() * 400),
+    previous: 2800 + Math.round(Math.cos(i / 3) * 700 + i * 70 + Math.random() * 350),
+  };
+});
+
+export const analyticsChannels = [
+  { name: "Organic Search", users: 18420, sessions: 42180, conversion: 5.2 },
+  { name: "Direct", users: 12340, sessions: 28960, conversion: 6.1 },
+  { name: "Paid Ads", users: 8920, sessions: 21340, conversion: 7.8 },
+  { name: "Social", users: 6480, sessions: 14820, conversion: 3.4 },
+  { name: "Referral", users: 4120, sessions: 9640, conversion: 4.8 },
+  { name: "Email", users: 3240, sessions: 8120, conversion: 9.2 },
+];
+
+export const analyticsDevices = [
+  { name: "Desktop", value: 58 },
+  { name: "Mobile", value: 34 },
+  { name: "Tablet", value: 8 },
+];
+
+export const analyticsCountries = [
+  { code: "UA", name: "Україна", users: 18420, flag: "🇺🇦" },
+  { code: "PL", name: "Польща", users: 9230, flag: "🇵🇱" },
+  { code: "DE", name: "Німеччина", users: 7840, flag: "🇩🇪" },
+  { code: "US", name: "США", users: 6420, flag: "🇺🇸" },
+  { code: "GB", name: "Велика Британія", users: 4180, flag: "🇬🇧" },
+  { code: "FR", name: "Франція", users: 3240, flag: "🇫🇷" },
+  { code: "CA", name: "Канада", users: 2480, flag: "🇨🇦" },
+  { code: "NL", name: "Нідерланди", users: 1890, flag: "🇳🇱" },
+];
+
+export const analyticsTopPages = [
+  { path: "/", title: "Головна", views: 48210, avgTime: "2m 14s", bounce: 28 },
+  { path: "/pricing", title: "Тарифи", views: 24180, avgTime: "3m 42s", bounce: 22 },
+  { path: "/dashboard", title: "Дашборд", views: 18920, avgTime: "8m 12s", bounce: 12 },
+  { path: "/integrations", title: "Інтеграції", views: 14820, avgTime: "4m 28s", bounce: 18 },
+  { path: "/docs", title: "Документація", views: 12340, avgTime: "5m 56s", bounce: 24 },
+  { path: "/blog", title: "Блог", views: 9840, avgTime: "3m 18s", bounce: 42 },
+  { path: "/login", title: "Вхід", views: 8420, avgTime: "1m 04s", bounce: 38 },
+];
+
+// Cohort retention matrix: 8 cohorts × 8 weeks
+export const analyticsCohorts = Array.from({ length: 8 }).map((_, cohortIdx) => {
+  const d = new Date();
+  d.setDate(d.getDate() - (7 - cohortIdx) * 7);
+  const size = 1200 - cohortIdx * 80 + Math.round(Math.random() * 200);
+  const weeks: Array<number | null> = [];
+  for (let w = 0; w < 8; w++) {
+    if (cohortIdx + w >= 8) { weeks.push(null); continue; }
+    // Retention curve: 100, 62, 48, 41, 36, 32, 29, 27 (with noise)
+    const base = [100, 62, 48, 41, 36, 32, 29, 27][w];
+    weeks.push(Math.max(8, Math.round(base + (Math.random() * 8 - 4))));
+  }
+  return {
+    cohort: d.toLocaleDateString("uk-UA", { day: "2-digit", month: "short" }),
+    size,
+    weeks,
+  };
+});
+
+// Hourly heatmap: 7 days × 24 hours
+export const analyticsHeatmap = Array.from({ length: 7 }).map((_, day) => ({
+  day: ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд"][day],
+  hours: Array.from({ length: 24 }).map((_, h) => {
+    // Peak hours: 10-12 and 19-22 on weekdays; lower on weekends
+    const weekendFactor = day >= 5 ? 0.6 : 1;
+    const peakDay = h >= 10 && h <= 13 ? 1.5 : 1;
+    const peakEve = h >= 19 && h <= 22 ? 1.7 : 1;
+    const night = h <= 6 ? 0.2 : 1;
+    const base = 40 * weekendFactor * peakDay * peakEve * night;
+    return Math.round(base + Math.random() * 20);
+  }),
+}));
+
+export const analyticsFunnel = [
+  { stage: "Відвідування", value: 48210, conversion: 100 },
+  { stage: "Перегляд продукту", value: 28940, conversion: 60 },
+  { stage: "Додано в кошик", value: 14820, conversion: 30.7 },
+  { stage: "Початок оплати", value: 6420, conversion: 13.3 },
+  { stage: "Покупка", value: 3180, conversion: 6.6 },
+];
+
+export const analyticsEvents = [
+  { id: "e1", name: "page_view", count: 184320, change: 8.4 },
+  { id: "e2", name: "sign_up", count: 4820, change: 12.1 },
+  { id: "e3", name: "login", count: 28940, change: 4.2 },
+  { id: "e4", name: "purchase", count: 3180, change: 18.6 },
+  { id: "e5", name: "add_to_cart", count: 14820, change: -2.3 },
+  { id: "e6", name: "search", count: 12480, change: 6.7 },
+  { id: "e7", name: "share", count: 2140, change: 22.4 },
+  { id: "e8", name: "video_play", count: 8920, change: 14.8 },
+];
