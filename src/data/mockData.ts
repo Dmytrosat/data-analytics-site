@@ -393,3 +393,111 @@ export const analyticsEvents = [
   { id: "e7", name: "share", count: 2140, change: 22.4 },
   { id: "e8", name: "video_play", count: 8920, change: 14.8 },
 ];
+
+// ─────────── Reports ───────────
+export type ReportFormat = "PDF" | "Excel" | "CSV" | "JSON";
+export type ReportFrequency = "once" | "daily" | "weekly" | "monthly" | "quarterly";
+export type ReportStatus = "ready" | "generating" | "scheduled" | "failed" | "draft";
+export type ReportCategory = "Financial" | "Marketing" | "Product" | "Operations" | "Custom";
+
+export interface ReportTemplate {
+  id: string;
+  name: string;
+  description: string;
+  category: ReportCategory;
+  iconKey: "revenue" | "growth" | "users" | "ops" | "custom" | "marketing";
+  popularity: number;
+}
+
+export interface ScheduledReport {
+  id: string;
+  name: string;
+  templateId: string;
+  frequency: ReportFrequency;
+  format: ReportFormat;
+  recipients: string[];
+  nextRun: string;
+  lastRun: string;
+  enabled: boolean;
+  owner: string;
+}
+
+export interface GeneratedReport {
+  id: string;
+  name: string;
+  category: ReportCategory;
+  format: ReportFormat;
+  status: ReportStatus;
+  size: string;
+  pages: number;
+  createdAt: string;
+  createdBy: string;
+  period: string;
+  downloads: number;
+}
+
+export const reportTemplates: ReportTemplate[] = [
+  { id: "tpl_01", name: "Фінансовий звіт", description: "Виручка, витрати, маржа та P&L за період.", category: "Financial", iconKey: "revenue", popularity: 94 },
+  { id: "tpl_02", name: "Маркетинг-перформанс", description: "ROI кампаній, CAC, LTV та канали залучення.", category: "Marketing", iconKey: "marketing", popularity: 87 },
+  { id: "tpl_03", name: "Звіт по користувачах", description: "Активні користувачі, retention, engagement.", category: "Product", iconKey: "users", popularity: 82 },
+  { id: "tpl_04", name: "Операційні метрики", description: "SLA, uptime, latency та інциденти.", category: "Operations", iconKey: "ops", popularity: 71 },
+  { id: "tpl_05", name: "Воронка конверсії", description: "Етапи воронки з drop-off аналізом.", category: "Marketing", iconKey: "growth", popularity: 78 },
+  { id: "tpl_06", name: "Продуктова аналітика", description: "Використання фіч, активація, churn.", category: "Product", iconKey: "users", popularity: 69 },
+  { id: "tpl_07", name: "Когортний аналіз", description: "Retention за когортами та LTV-криві.", category: "Product", iconKey: "growth", popularity: 64 },
+  { id: "tpl_08", name: "Кастомний звіт", description: "Згенеруйте звіт з власних метрик і фільтрів.", category: "Custom", iconKey: "custom", popularity: 52 },
+];
+
+export const scheduledReports: ScheduledReport[] = [
+  { id: "sch_01", name: "Тижневий фінансовий", templateId: "tpl_01", frequency: "weekly", format: "PDF", recipients: ["cfo@data.app", "ceo@data.app"], nextRun: new Date(Date.now() + 1000 * 60 * 60 * 18).toISOString(), lastRun: new Date(Date.now() - 1000 * 60 * 60 * 24 * 6).toISOString(), enabled: true, owner: "admin@data.app" },
+  { id: "sch_02", name: "Місячний P&L", templateId: "tpl_01", frequency: "monthly", format: "Excel", recipients: ["finance@data.app"], nextRun: new Date(Date.now() + 1000 * 60 * 60 * 24 * 4).toISOString(), lastRun: new Date(Date.now() - 1000 * 60 * 60 * 24 * 26).toISOString(), enabled: true, owner: "cfo@data.app" },
+  { id: "sch_03", name: "Денний marketing digest", templateId: "tpl_02", frequency: "daily", format: "PDF", recipients: ["growth@data.app", "marketing@data.app"], nextRun: new Date(Date.now() + 1000 * 60 * 60 * 7).toISOString(), lastRun: new Date(Date.now() - 1000 * 60 * 60 * 17).toISOString(), enabled: true, owner: "growth@data.app" },
+  { id: "sch_04", name: "Квартальний продуктовий", templateId: "tpl_06", frequency: "quarterly", format: "PDF", recipients: ["pm@data.app", "ceo@data.app"], nextRun: new Date(Date.now() + 1000 * 60 * 60 * 24 * 14).toISOString(), lastRun: new Date(Date.now() - 1000 * 60 * 60 * 24 * 76).toISOString(), enabled: false, owner: "pm@data.app" },
+  { id: "sch_05", name: "Тижневий ops health", templateId: "tpl_04", frequency: "weekly", format: "Excel", recipients: ["ops@data.app"], nextRun: new Date(Date.now() + 1000 * 60 * 60 * 36).toISOString(), lastRun: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5).toISOString(), enabled: true, owner: "ops@data.app" },
+];
+
+const reportNames = [
+  "Q1 2026 Financial Summary", "March Marketing Performance", "Weekly User Engagement",
+  "Ops Health Report — Week 18", "Conversion Funnel Q1", "Product Analytics — March",
+  "Cohort Retention Analysis", "Custom Revenue by Region", "API Usage Report",
+  "Stripe Reconciliation March", "Cohort LTV Curves", "Top Pages Performance",
+  "SLA Report — Week 17", "Email Campaigns ROI", "Trial-to-Paid Conversion",
+  "Customer Health Scores", "Feature Adoption Report", "Churn Analysis Q1",
+  "Daily Active Users — March", "Revenue Forecast 2026",
+];
+const reportCategories: ReportCategory[] = ["Financial", "Marketing", "Product", "Operations", "Custom"];
+const reportFormats: ReportFormat[] = ["PDF", "Excel", "CSV", "JSON"];
+const reportStatuses: ReportStatus[] = ["ready", "ready", "ready", "generating", "scheduled", "failed", "draft"];
+const reportPeriods = ["Q1 2026", "March 2026", "Week 18, 2026", "Last 30 days", "YTD 2026", "Last 7 days", "April 2026"];
+const reportOwners = ["admin@data.app", "cfo@data.app", "growth@data.app", "pm@data.app", "ops@data.app", "analyst@data.app"];
+
+export const generatedReports: GeneratedReport[] = reportNames.map((name, i) => ({
+  id: `rep_${(i + 1).toString().padStart(3, "0")}`,
+  name,
+  category: reportCategories[i % reportCategories.length],
+  format: reportFormats[i % reportFormats.length],
+  status: reportStatuses[i % reportStatuses.length],
+  size: `${(0.4 + ((i * 17) % 80) / 10).toFixed(1)} MB`,
+  pages: 4 + ((i * 7) % 38),
+  createdAt: new Date(Date.now() - i * 1000 * 60 * 60 * 9).toISOString(),
+  createdBy: reportOwners[i % reportOwners.length],
+  period: reportPeriods[i % reportPeriods.length],
+  downloads: ((i * 13) % 84) + 1,
+}));
+
+export const reportsActivityTimeline = Array.from({ length: 14 }).map((_, i) => {
+  const d = new Date();
+  d.setDate(d.getDate() - (13 - i));
+  return {
+    date: d.toLocaleDateString("uk-UA", { day: "2-digit", month: "2-digit" }),
+    generated: 6 + Math.round(Math.sin(i / 2) * 4 + Math.random() * 5),
+    scheduled: 3 + Math.round(Math.cos(i / 2) * 2 + Math.random() * 3),
+  };
+});
+
+export const reportsByCategory = [
+  { name: "Financial", value: 38 },
+  { name: "Marketing", value: 27 },
+  { name: "Product", value: 22 },
+  { name: "Operations", value: 18 },
+  { name: "Custom", value: 12 },
+];
