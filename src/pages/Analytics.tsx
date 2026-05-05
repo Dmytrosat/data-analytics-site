@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import {
   Area, AreaChart, Bar, BarChart, CartesianGrid, Cell, Legend, Line, LineChart,
-  Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis, Sparkline,
+  Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis,
 } from "recharts";
 import {
   Users, Activity, MousePointerClick, Clock, DollarSign, Target,
