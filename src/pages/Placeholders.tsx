@@ -1,5 +1,5 @@
 import {
-  Database, ScrollText, LineChart, FileText,
+  Database, ScrollText, FileText,
   Users, UsersRound, CreditCard, KeyRound, Webhook, Bell, Settings,
 } from "lucide-react";
 import { PagePlaceholder } from "@/components/dashboard/PagePlaceholder";
@@ -24,15 +24,6 @@ export const LogsPage = () => (
     description="Системні події та аудит"
     icon={ScrollText}
     bullets={["Фільтр за рівнем", "Повнотекстовий пошук", "Експорт у JSON/CSV"]}
-  />
-);
-
-export const AnalyticsPage = () => (
-  <PagePlaceholder
-    title="Аналітика"
-    description="Метрики продуктивності та використання"
-    icon={LineChart}
-    bullets={["Когортний аналіз", "Воронки конверсії", "Порівняння періодів"]}
   />
 );
 
