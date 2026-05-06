@@ -10,9 +10,10 @@ import Integrations from "./pages/Integrations.tsx";
 import Visualization from "./pages/Visualization.tsx";
 import Analytics from "./pages/Analytics.tsx";
 import Reports from "./pages/Reports.tsx";
+import Billing from "./pages/Billing.tsx";
 import {
   SourcesPage, LogsPage,
-  UsersPage, TeamsPage, BillingPage,
+  UsersPage, TeamsPage,
   ApiKeysPage, WebhooksPage, NotificationsPage,
   SettingsPage,
 } from "./pages/Placeholders.tsx";
@@ -38,7 +39,7 @@ const App = () => (
             <Route path="/integrations" element={<Integrations />} />
             <Route path="/users" element={<UsersPage />} />
             <Route path="/teams" element={<TeamsPage />} />
-            <Route path="/billing" element={<BillingPage />} />
+            <Route path="/billing" element={<Billing />} />
             <Route path="/api-keys" element={<ApiKeysPage />} />
             <Route path="/webhooks" element={<WebhooksPage />} />
             <Route path="/notifications" element={<NotificationsPage />} />

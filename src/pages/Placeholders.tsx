@@ -1,6 +1,6 @@
 import {
   Database, ScrollText,
-  Users, UsersRound, CreditCard, KeyRound, Webhook, Bell, Settings,
+  Users, UsersRound, KeyRound, Webhook, Bell, Settings,
 } from "lucide-react";
 import { PagePlaceholder } from "@/components/dashboard/PagePlaceholder";
 
@@ -42,15 +42,6 @@ export const TeamsPage = () => (
     description="Робочі простори та групи"
     icon={UsersRound}
     bullets={["Багато команд", "Ізоляція даних", "Спільні дашборди"]}
-  />
-);
-
-export const BillingPage = () => (
-  <PagePlaceholder
-    title="Тарифи"
-    description="Підписка, рахунки та використання"
-    icon={CreditCard}
-    bullets={["Поточний план", "Історія платежів", "Ліміти та квоти"]}
   />
 );
 
