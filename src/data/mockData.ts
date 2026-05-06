@@ -501,3 +501,125 @@ export const reportsByCategory = [
   { name: "Operations", value: 18 },
   { name: "Custom", value: 12 },
 ];
+// ============= BILLING =============
+
+export type PlanTier = "free" | "starter" | "pro" | "enterprise";
+export type InvoiceStatus = "paid" | "pending" | "failed" | "refunded";
+export type PaymentMethodType = "card" | "paypal" | "bank";
+
+export interface BillingPlan {
+  id: PlanTier;
+  name: string;
+  price: number; // USD/month
+  priceYearly: number;
+  description: string;
+  features: string[];
+  highlighted?: boolean;
+  limits: { records: number; sources: number; users: number; apiCalls: number };
+}
+
+export interface Invoice {
+  id: string;
+  number: string;
+  date: string;
+  amount: number;
+  status: InvoiceStatus;
+  description: string;
+  period: string;
+}
+
+export interface PaymentMethod {
+  id: string;
+  type: PaymentMethodType;
+  brand: string;
+  last4: string;
+  expMonth?: number;
+  expYear?: number;
+  isDefault: boolean;
+  holder: string;
+}
+
+export interface UsageMetric {
+  id: string;
+  name: string;
+  used: number;
+  limit: number;
+  unit: string;
+}
+
+export const billingPlans: BillingPlan[] = [
+  {
+    id: "free", name: "Free", price: 0, priceYearly: 0,
+    description: "Для знайомства з платформою",
+    features: ["1 000 записів", "2 джерела", "1 користувач", "Базова аналітика", "Спільнота"],
+    limits: { records: 1000, sources: 2, users: 1, apiCalls: 500 },
+  },
+  {
+    id: "starter", name: "Starter", price: 29, priceYearly: 290,
+    description: "Для малих команд та стартапів",
+    features: ["50 000 записів", "10 джерел", "5 користувачів", "Email-сповіщення", "Підтримка 48 год"],
+    limits: { records: 50000, sources: 10, users: 5, apiCalls: 50000 },
+  },
+  {
+    id: "pro", name: "Pro", price: 99, priceYearly: 990,
+    description: "Найпопулярніший вибір",
+    features: ["500 000 записів", "Необмежені джерела", "20 користувачів", "Webhooks та API", "Пріоритетна підтримка", "SSO"],
+    highlighted: true,
+    limits: { records: 500000, sources: 999, users: 20, apiCalls: 500000 },
+  },
+  {
+    id: "enterprise", name: "Enterprise", price: 499, priceYearly: 4990,
+    description: "Для великих організацій",
+    features: ["Безлімітні записи", "Безлімітні користувачі", "SLA 99.99%", "Персональний менеджер", "Аудит та compliance", "On-premise опція"],
+    limits: { records: 999999999, sources: 9999, users: 9999, apiCalls: 99999999 },
+  },
+];
+
+export const currentPlanId: PlanTier = "pro";
+
+export const usageMetrics: UsageMetric[] = [
+  { id: "u1", name: "Записи", used: 287430, limit: 500000, unit: "" },
+  { id: "u2", name: "Джерела даних", used: 27, limit: 999, unit: "" },
+  { id: "u3", name: "Користувачі", used: 14, limit: 20, unit: "" },
+  { id: "u4", name: "API запити", used: 342118, limit: 500000, unit: "/міс" },
+  { id: "u5", name: "Сховище", used: 42, limit: 100, unit: "GB" },
+  { id: "u6", name: "Webhooks", used: 8, limit: 50, unit: "" },
+];
+
+export const invoices: Invoice[] = Array.from({ length: 14 }).map((_, i) => {
+  const d = new Date();
+  d.setMonth(d.getMonth() - i);
+  const statuses: InvoiceStatus[] = ["paid", "paid", "paid", "paid", "pending", "failed", "refunded"];
+  const status = i === 0 ? "pending" : statuses[i % statuses.length] === "pending" ? "paid" : statuses[i % statuses.length];
+  return {
+    id: `inv_${1000 + i}`,
+    number: `INV-2025-${String(1000 + i).padStart(5, "0")}`,
+    date: d.toISOString(),
+    amount: i % 5 === 0 ? 990 : 99,
+    status,
+    description: i % 5 === 0 ? "Pro Plan — Yearly" : "Pro Plan — Monthly",
+    period: d.toLocaleDateString("uk-UA", { month: "long", year: "numeric" }),
+  };
+});
+
+export const paymentMethods: PaymentMethod[] = [
+  { id: "pm_1", type: "card", brand: "Visa", last4: "4242", expMonth: 12, expYear: 2027, isDefault: true, holder: "Oleksandr Petrenko" },
+  { id: "pm_2", type: "card", brand: "Mastercard", last4: "8819", expMonth: 6, expYear: 2026, isDefault: false, holder: "Oleksandr Petrenko" },
+  { id: "pm_3", type: "paypal", brand: "PayPal", last4: "petrenko@mail.com", isDefault: false, holder: "Oleksandr Petrenko" },
+];
+
+export const billingHistory = Array.from({ length: 12 }).map((_, i) => {
+  const d = new Date();
+  d.setMonth(d.getMonth() - (11 - i));
+  return {
+    month: d.toLocaleDateString("uk-UA", { month: "short" }),
+    amount: 99 + Math.round(Math.sin(i / 2) * 20 + Math.random() * 30),
+    usage: 200000 + Math.round(Math.cos(i / 3) * 80000 + i * 12000),
+  };
+});
+
+export const upcomingCharges = [
+  { id: "c1", name: "Pro Plan — Monthly", date: "2026-06-01", amount: 99 },
+  { id: "c2", name: "Додаткові API запити", date: "2026-06-01", amount: 12 },
+  { id: "c3", name: "Premium підтримка", date: "2026-06-01", amount: 29 },
+];
